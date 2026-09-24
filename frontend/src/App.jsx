@@ -9,19 +9,18 @@ function App() {
   const [recommendations, setRecommendations] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   async function getRecommendations(preferences) {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/recommend", {
+      const response = await fetch(`${API_URL}/api/recommend`, {
         method: "POST",
-
         headers: {
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify(preferences),
       });
 
