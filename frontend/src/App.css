@@ -1,0 +1,1516 @@
+/* =========================================
+   GLOBAL
+   ========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* =========================================
+   ABSTRACT WAVE CINEMATIC BACKGROUND
+   ========================================= */
+
+body {
+  position: relative;
+
+  margin: 0;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: #f8fafc;
+
+  min-height: 100vh;
+
+  overflow-x: hidden;
+
+  background:
+    /* Left orange ambient glow */
+    radial-gradient(
+      ellipse 45% 35% at 5% 35%,
+      rgba(249, 115, 22, 0.18) 0%,
+      rgba(194, 65, 12, 0.08) 38%,
+      transparent 75%
+    ),
+
+    /* Right orange ambient glow */
+    radial-gradient(
+      ellipse 45% 35% at 95% 65%,
+      rgba(249, 115, 22, 0.16) 0%,
+      rgba(194, 65, 12, 0.07) 38%,
+      transparent 75%
+    ),
+
+    /* Bottom orange glow */
+    radial-gradient(
+      ellipse 55% 25% at 50% 100%,
+      rgba(234, 88, 12, 0.12) 0%,
+      transparent 72%
+    ),
+
+    /* Main dark background */
+    linear-gradient(
+      135deg,
+      #020202 0%,
+      #070403 35%,
+      #0b0503 52%,
+      #050302 72%,
+      #010101 100%
+    );
+
+  background-attachment: fixed;
+}
+
+
+/* =========================================
+   ABSTRACT ORANGE WAVES
+   ========================================= */
+
+body::before {
+  content: "";
+
+  position: fixed;
+
+  z-index: 0;
+
+  width: 1200px;
+  height: 420px;
+
+  left: -280px;
+  top: 220px;
+
+  border-radius: 50%;
+
+  border-top:
+    2px solid rgba(249, 115, 22, 0.65);
+
+  border-bottom:
+    1px solid rgba(249, 115, 22, 0.18);
+
+  box-shadow:
+    0 -18px 0 rgba(249, 115, 22, 0.13),
+    0 -36px 0 rgba(249, 115, 22, 0.08),
+    0 -54px 0 rgba(249, 115, 22, 0.045),
+    0 -72px 0 rgba(249, 115, 22, 0.025);
+
+  transform:
+    rotate(-13deg)
+    skewY(-3deg);
+
+  opacity: 0.9;
+
+  filter: blur(0.15px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   SECOND ABSTRACT WAVE
+   ========================================= */
+
+body::after {
+  content: "";
+
+  position: fixed;
+
+  z-index: 0;
+
+  width: 1250px;
+  height: 440px;
+
+  right: -350px;
+  bottom: 30px;
+
+  border-radius: 50%;
+
+  border-top:
+    2px solid rgba(249, 115, 22, 0.60);
+
+  border-bottom:
+    1px solid rgba(249, 115, 22, 0.15);
+
+  box-shadow:
+    0 -20px 0 rgba(249, 115, 22, 0.12),
+    0 -40px 0 rgba(249, 115, 22, 0.075),
+    0 -60px 0 rgba(249, 115, 22, 0.045),
+    0 -80px 0 rgba(249, 115, 22, 0.025);
+
+  transform:
+    rotate(12deg)
+    skewY(3deg);
+
+  opacity: 0.85;
+
+  filter: blur(0.15px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   EXTRA WAVE LIGHT
+   ========================================= */
+
+#root::before,
+#root::after {
+  content: "";
+
+  position: fixed;
+
+  z-index: 0;
+
+  width: 900px;
+  height: 280px;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  opacity: 0.45;
+}
+
+
+/* Upper wave */
+
+#root::before {
+  top: 38%;
+  left: -350px;
+
+  border-top:
+    1px solid rgba(251, 146, 60, 0.35);
+
+  box-shadow:
+    0 -12px 0 rgba(251, 146, 60, 0.08),
+    0 -24px 0 rgba(251, 146, 60, 0.045);
+
+  transform: rotate(-8deg);
+}
+
+
+/* Lower wave */
+
+#root::after {
+  right: -350px;
+  bottom: 20%;
+
+  border-top:
+    1px solid rgba(251, 146, 60, 0.30);
+
+  box-shadow:
+    0 -12px 0 rgba(251, 146, 60, 0.07),
+    0 -24px 0 rgba(251, 146, 60, 0.04);
+
+  transform: rotate(9deg);
+}
+
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+
+#root {
+  position: relative;
+
+  z-index: 1;
+
+  min-height: 100vh;
+}
+
+
+/* =========================================
+   MAIN APP
+   ========================================= */
+
+.app {
+  width: min(1250px, 92%);
+
+  margin: 0 auto;
+
+  padding: 45px 0 80px;
+
+  position: relative;
+
+  z-index: 1;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.app-header {
+  position: relative;
+
+  text-align: center;
+
+  margin-bottom: 42px;
+
+  padding-top: 5px;
+}
+
+
+/* Small badge above title */
+
+.app-header::before {
+  content: "✦  Find Your Next Favourite Movie";
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 20px;
+
+  margin-bottom: 17px;
+
+  border: 1px solid rgba(249, 115, 22, 0.32);
+
+  border-radius: 999px;
+
+  color: #fdba74;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124, 45, 18, 0.30),
+      rgba(67, 20, 7, 0.20)
+    );
+
+  box-shadow:
+    0 0 25px rgba(249, 115, 22, 0.06);
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.2px;
+}
+
+
+/* Main title */
+
+.app-header h1 {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 12px;
+
+  width: 100%;
+
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      2.2rem,
+      5vw,
+      4rem
+    );
+
+  font-weight: 800;
+
+  line-height: 1.05;
+
+  letter-spacing: -2px;
+
+  white-space: nowrap;
+}
+
+
+/* Movie emoji */
+
+.title-icon {
+  display: inline-block;
+
+  flex-shrink: 0;
+
+  font-size: 0.72em;
+
+  line-height: 1;
+
+  color: initial;
+
+  -webkit-text-fill-color: initial;
+
+  filter:
+    drop-shadow(
+      0 5px 15px rgba(249, 115, 22, 0.35)
+    );
+}
+
+
+/* Title gradient */
+
+.app-header h1 > span:last-child {
+  display: inline-block;
+
+  white-space: nowrap;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #ffffff 30%,
+      #fb923c 62%,
+      #f97316 100%
+    );
+
+  background-clip: text;
+
+  -webkit-background-clip: text;
+
+  color: transparent;
+
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Subtitle */
+
+.app-header p {
+  max-width: 700px;
+
+  margin: 16px auto 0;
+
+  color: #a8a29e;
+
+  font-size: 16px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   PREFERENCE FORM
+   ========================================= */
+
+.preference-form {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 20px;
+
+  padding: 30px 32px;
+
+  margin-bottom: 38px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(249, 115, 22, 0.34);
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(45, 24, 14, 0.78),
+      rgba(15, 10, 8, 0.90)
+    );
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+
+/*
+   We use display: contents so the
+   five fields inside form-grid become
+   part of the form's 3-column grid.
+
+   This lets the Recommend button occupy
+   the sixth position, just like the mockup.
+*/
+
+.form-grid {
+  display: contents;
+}
+
+
+/* Background glow */
+
+.preference-form::after {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+
+  height: 280px;
+
+  top: -190px;
+
+  right: -90px;
+
+  border-radius: 50%;
+
+  background: #f97316;
+
+  opacity: 0.07;
+
+  filter: blur(45px);
+
+  pointer-events: none;
+}
+
+
+/* Form title */
+
+.preference-form h2 {
+  position: relative;
+
+  z-index: 1;
+
+  grid-column: 1 / -1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 0 0 2px;
+
+  color: #ffffff;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+
+/* Small icon before title */
+
+.preference-form h2::before {
+  content: "☷";
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #fb923c;
+
+  font-size: 25px;
+}
+
+
+/* =========================================
+   FORM GROUP
+   ========================================= */
+
+.form-group {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+/* Labels */
+
+.form-group label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #d6d3d1;
+
+  font-size: 13px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================
+   INPUTS
+   ========================================= */
+
+.form-group select,
+.form-group input {
+  width: 100%;
+
+  height: 49px;
+
+  padding: 12px 14px;
+
+  color: #f5f5f4;
+
+  background:
+    rgba(24, 18, 15, 0.72);
+
+  border: 1px solid rgba(168, 162, 158, 0.30);
+
+  border-radius: 11px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Select */
+
+.form-group select {
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+
+/* Hover */
+
+.form-group select:hover,
+.form-group input:hover {
+  border-color:
+    rgba(251, 146, 60, 0.50);
+
+  background:
+    rgba(35, 22, 16, 0.85);
+}
+
+
+/* Focus */
+
+.form-group select:focus,
+.form-group input:focus {
+  border-color: #f97316;
+
+  background:
+    rgba(35, 22, 16, 0.95);
+
+  box-shadow:
+    0 0 0 3px rgba(249, 115, 22, 0.10),
+    0 0 20px rgba(249, 115, 22, 0.05);
+}
+
+
+/* Options */
+
+.form-group select option {
+  background: #1c120d;
+
+  color: #ffffff;
+}
+
+
+/* =========================================
+   RECOMMEND BUTTON
+   ========================================= */
+
+.recommend-button {
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+
+  height: 49px;
+
+  align-self: end;
+
+  margin-top: 21px;
+
+  padding: 12px 20px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f97316,
+      #fb923c
+    );
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 25px rgba(249, 115, 22, 0.22);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+
+/* Hover */
+
+.recommend-button:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+
+  box-shadow:
+    0 12px 30px rgba(249, 115, 22, 0.35);
+}
+
+
+/* Active */
+
+.recommend-button:active {
+  transform: translateY(0);
+}
+
+
+/* Disabled */
+
+.recommend-button:disabled {
+  background: #57534e;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+
+  transform: none;
+}
+
+
+/* =========================================
+   RECOMMENDATIONS HEADER
+   ========================================= */
+
+.recommendation-list {
+  margin-top: 15px;
+}
+
+
+.recommendation-list h2 {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 0 0 22px;
+
+  color: #f8fafc;
+
+  font-size: 25px;
+
+  font-weight: 750;
+}
+
+
+/* Star icon */
+
+.recommendation-list h2::before {
+  content: "★";
+
+  color: #f59e0b;
+
+  font-size: 22px;
+
+  text-shadow:
+    0 0 12px rgba(245, 158, 11, 0.35);
+}
+
+
+/* =========================================
+   RECOMMENDATION GRID
+   ========================================= */
+
+.recommendation-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+
+/* =========================================
+   MOVIE CARD
+   ========================================= */
+
+.recommendation-card {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 22px 20px;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(180, 83, 9, 0.40);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(38, 24, 16, 0.94),
+      rgba(19, 13, 10, 0.97)
+    );
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.30);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* Top card glow */
+
+.recommendation-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+
+  height: 180px;
+
+  top: -100px;
+
+  right: -80px;
+
+  border-radius: 50%;
+
+  background: #f97316;
+
+  opacity: 0.07;
+
+  filter: blur(25px);
+
+  pointer-events: none;
+}
+
+
+/* Bottom card glow */
+
+.recommendation-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 140px;
+
+  height: 140px;
+
+  bottom: -100px;
+
+  left: -70px;
+
+  border-radius: 50%;
+
+  background: #c2410c;
+
+  opacity: 0.05;
+
+  filter: blur(30px);
+
+  pointer-events: none;
+}
+
+
+/* Hover */
+
+.recommendation-card:hover {
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(249, 115, 22, 0.62);
+
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.42),
+    0 0 30px rgba(249, 115, 22, 0.05);
+}
+
+
+/* =========================================
+   MOVIE HEADER
+   ========================================= */
+
+.movie-header {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  margin-bottom: 17px;
+}
+
+
+.movie-title {
+  min-width: 0;
+}
+
+
+.movie-title h3 {
+  margin: 0 0 5px;
+
+  color: #ffffff;
+
+  font-size: 20px;
+
+  font-weight: 750;
+
+  line-height: 1.25;
+}
+
+
+/* =========================================
+   MATCH LEVEL
+   ========================================= */
+
+.match-level {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  color: #fbbf24;
+
+  background:
+    rgba(180, 83, 9, 0.30);
+
+  border:
+    1px solid rgba(245, 158, 11, 0.22);
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   SCORE CIRCLE
+   ========================================= */
+
+.score-container {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 70px;
+
+  height: 70px;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #f97316 0deg,
+      #f59e0b 260deg,
+      #3f342d 260deg,
+      #3f342d 360deg
+    );
+
+  box-shadow:
+    0 0 20px rgba(249, 115, 22, 0.12);
+}
+
+
+/* Dark center */
+
+.score-container::before {
+  content: "";
+
+  position: absolute;
+
+  width: 58px;
+
+  height: 58px;
+
+  border-radius: 50%;
+
+  background: #17100d;
+}
+
+
+/* Score number */
+
+.score {
+  position: relative;
+
+  z-index: 1;
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  background: none;
+
+  background-clip: initial;
+
+  -webkit-background-clip: initial;
+
+  -webkit-text-fill-color: #ffffff;
+}
+
+
+/* Hide old Match label */
+
+.score-label {
+  display: none;
+}
+
+
+/* =========================================
+   SCORE BAR
+   ========================================= */
+
+.score-bar {
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+
+  height: 9px;
+
+  margin-bottom: 20px;
+
+  overflow: hidden;
+
+  background: #4a403b;
+
+  border-radius: 999px;
+}
+
+
+.score-fill {
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      #f97316,
+      #f59e0b
+    );
+
+  border-radius: 999px;
+
+  transition:
+    width 0.6s ease;
+
+  box-shadow:
+    0 0 10px rgba(249, 115, 22, 0.25);
+}
+
+
+/* =========================================
+   REASON SECTIONS
+   ========================================= */
+
+.reason-section {
+  position: relative;
+
+  z-index: 1;
+
+  margin-top: 12px;
+
+  padding: 14px;
+
+  border:
+    1px solid rgba(168, 162, 158, 0.18);
+
+  border-radius: 12px;
+
+  background:
+    rgba(35, 27, 23, 0.65);
+}
+
+
+.reason-section h4 {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 0 0 11px;
+
+  color: #d6d3d1;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+
+.reason-section ul {
+  margin: 0;
+
+  padding: 0;
+
+  list-style: none;
+}
+
+
+.reason-section li {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 8px;
+
+  color: #c4bdb8;
+
+  font-size: 12px;
+
+  line-height: 1.45;
+}
+
+
+.reason-section li:last-child {
+  margin-bottom: 0;
+}
+
+
+.reason-section li strong {
+  flex-shrink: 0;
+
+  color: #fbbf24;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   MATCHING PREFERENCES
+   ========================================= */
+
+.reason-section:not(.rule-section):not(.penalty-section) {
+  border-color:
+    rgba(34, 197, 94, 0.18);
+
+  background:
+    rgba(34, 197, 94, 0.045);
+}
+
+
+.reason-section:not(.rule-section):not(.penalty-section) h4 {
+  color: #4ade80;
+}
+
+
+.reason-section:not(.rule-section):not(.penalty-section) h4::before {
+  content: "●";
+
+  font-size: 9px;
+
+  color: #4ade80;
+}
+
+
+/* =========================================
+   RULE SECTION
+   ========================================= */
+
+.rule-section {
+  border-color:
+    rgba(217, 70, 239, 0.20);
+
+  background:
+    rgba(126, 34, 206, 0.08);
+}
+
+
+.rule-section h4 {
+  color: #e879f9;
+}
+
+
+.rule-section h4::before {
+  content: "✦";
+
+  color: #e879f9;
+}
+
+
+.rule-section li strong {
+  color: #f0abfc;
+}
+
+
+/* =========================================
+   PENALTY SECTION
+   ========================================= */
+
+.penalty-section {
+  border-color:
+    rgba(249, 115, 22, 0.25);
+
+  background:
+    rgba(120, 53, 15, 0.12);
+}
+
+
+.penalty-section h4 {
+  color: #fb923c;
+}
+
+
+.penalty-section h4::before {
+  content: "●";
+
+  font-size: 9px;
+
+  color: #fb923c;
+}
+
+
+.penalty-section li strong {
+  color: #fb923c;
+}
+
+
+/* =========================================
+   LOADING
+   ========================================= */
+
+.loading {
+  padding: 25px;
+
+  text-align: center;
+
+  color: #a8a29e;
+
+  font-size: 15px;
+}
+
+
+/* =========================================
+   ERROR
+   ========================================= */
+
+.error {
+  padding: 14px 16px;
+
+  margin-bottom: 25px;
+
+  border:
+    1px solid rgba(239, 68, 68, 0.25);
+
+  border-radius: 10px;
+
+  color: #fca5a5;
+
+  background:
+    rgba(127, 29, 29, 0.25);
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.recommendation-list > p {
+  padding: 35px;
+
+  text-align: center;
+
+  color: #a8a29e;
+
+  background:
+    rgba(25, 18, 14, 0.75);
+
+  border:
+    1px solid rgba(168, 162, 158, 0.15);
+
+  border-radius: 15px;
+}
+
+
+/* =========================================
+   RESPONSIVE — TABLET
+   ========================================= */
+
+@media (max-width: 950px) {
+
+  .app {
+    width: min(94%, 750px);
+
+    padding-top: 40px;
+  }
+
+
+  .preference-form {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .recommend-button {
+    grid-column: 1 / -1;
+  }
+
+
+  .recommendation-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .app-header h1 {
+    font-size:
+      clamp(
+        2rem,
+        6vw,
+        3.2rem
+      );
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE — MOBILE
+   ========================================= */
+
+@media (max-width: 650px) {
+
+  .app {
+    width: 94%;
+
+    padding-top: 28px;
+
+    padding-bottom: 50px;
+  }
+
+
+  .app-header {
+    margin-bottom: 30px;
+  }
+
+
+  .app-header::before {
+    padding: 7px 14px;
+
+    font-size: 12px;
+  }
+
+
+  .app-header h1 {
+    gap: 7px;
+
+    font-size:
+      clamp(
+        1.45rem,
+        7vw,
+        2rem
+      );
+
+    letter-spacing: -0.8px;
+
+    white-space: nowrap;
+  }
+
+
+  .title-icon {
+    font-size: 0.78em;
+  }
+
+
+  .app-header p {
+    margin-top: 13px;
+
+    font-size: 14px;
+  }
+
+
+  /* Preference form */
+
+  .preference-form {
+    grid-template-columns: 1fr;
+
+    padding: 22px 18px;
+
+    border-radius: 17px;
+  }
+
+
+  .preference-form h2 {
+    font-size: 20px;
+  }
+
+
+  .recommend-button {
+    grid-column: auto;
+
+    margin-top: 2px;
+  }
+
+
+  /* Recommendation cards */
+
+  .recommendation-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+
+  .recommendation-card {
+    padding: 20px 18px;
+  }
+
+
+  .movie-header {
+    gap: 15px;
+  }
+
+
+  .score-container {
+    width: 64px;
+
+    height: 64px;
+  }
+
+
+  .score-container::before {
+    width: 52px;
+
+    height: 52px;
+  }
+
+
+  .score {
+    font-size: 15px;
+  }
+
+
+  /* Reduce wave size on mobile */
+
+  body::before {
+    width: 750px;
+    height: 300px;
+
+    left: -300px;
+  }
+
+
+  body::after {
+    width: 750px;
+    height: 300px;
+
+    right: -300px;
+  }
+
+
+  #root::before,
+  #root::after {
+    width: 600px;
+  }
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+   ========================================= */
+
+@media (max-width: 380px) {
+
+  .app-header h1 {
+    font-size: 1.25rem;
+
+    gap: 5px;
+  }
+
+
+  .app-header::before {
+    font-size: 11px;
+
+    padding: 6px 11px;
+  }
+
+
+  .app-header p {
+    font-size: 13px;
+  }
+
+
+  .preference-form {
+    padding: 18px 14px;
+  }
+
+
+  .recommendation-card {
+    padding: 17px 14px;
+  }
+
+
+  .movie-title h3 {
+    font-size: 18px;
+  }
+
+
+  .reason-section {
+    padding: 12px;
+  }
+}
