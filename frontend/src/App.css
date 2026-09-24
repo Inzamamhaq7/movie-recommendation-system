@@ -940,26 +940,19 @@ select {
 
 .score-container {
   position: relative;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   flex-shrink: 0;
-
   width: 70px;
-
   height: 70px;
-
   border-radius: 50%;
 
   background:
     conic-gradient(
       #f97316 0deg,
-      #f59e0b 260deg,
-      #3f342d 260deg,
+      #f59e0b var(--score-angle),
+      #3f342d var(--score-angle),
       #3f342d 360deg
     );
 
