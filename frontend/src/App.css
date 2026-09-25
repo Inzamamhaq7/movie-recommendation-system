@@ -216,12 +216,20 @@ select {
 }
 
 
+/* =========================================
+   ROOT
+   ========================================= */
+
 #root {
   position: relative;
 
   z-index: 1;
 
+  width: 100%;
+  min-width: 0;
   min-height: 100vh;
+
+  overflow-x: clip;
 }
 
 
@@ -230,15 +238,15 @@ select {
    ========================================= */
 
 .app {
-  width: min(1250px, 92%);
+  width: min(92%, 1200px);
 
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 
-  padding: 45px 0 80px;
+  min-width: 0;
 
-  position: relative;
-
-  z-index: 1;
+  padding-top: 50px;
+  padding-bottom: 70px;
 }
 
 
@@ -309,6 +317,8 @@ select {
 
   width: 100%;
 
+  max-width: 100%;
+
   margin: 0;
 
   color: #ffffff;
@@ -356,6 +366,8 @@ select {
 
 .app-header h1 > span:last-child {
   display: inline-block;
+
+  min-width: 0;
 
   white-space: nowrap;
 
@@ -758,6 +770,8 @@ select {
     repeat(3, minmax(0, 1fr));
 
   gap: 22px;
+
+  min-width: 0;
 }
 
 
@@ -827,7 +841,10 @@ select {
 @media (max-width: 950px) {
 
   .app {
-    width: min(94%, 750px);
+    width: min(92%, 750px);
+
+    margin-left: auto;
+    margin-right: auto;
 
     padding-top: 40px;
   }
@@ -868,11 +885,23 @@ select {
 @media (max-width: 650px) {
 
   .app {
-    width: 94%;
+    width: calc(100% - 24px);
+
+    max-width: 1200px;
+
+    margin-left: auto;
+    margin-right: auto;
 
     padding-top: 28px;
 
     padding-bottom: 50px;
+  }
+
+
+  .recommendation-grid {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
   }
 
 
@@ -889,23 +918,40 @@ select {
 
 
   .app-header h1 {
-    gap: 7px;
+    gap: 6px;
 
     font-size:
       clamp(
-        1.45rem,
+        1.35rem,
         7vw,
         2rem
       );
 
-    letter-spacing: -0.8px;
+    letter-spacing: -0.7px;
 
-    white-space: nowrap;
+    white-space: normal;
+
+    line-height: 1.1;
+
+    text-align: center;
+  }
+
+
+  .app-header h1 > span:last-child {
+    min-width: 0;
+
+    max-width: 100%;
+
+    white-space: normal;
+
+    overflow-wrap: break-word;
   }
 
 
   .title-icon {
-    font-size: 0.78em;
+    flex-shrink: 0;
+
+    font-size: 0.75em;
   }
 
 
@@ -944,7 +990,7 @@ select {
   .recommendation-grid {
     grid-template-columns: 1fr;
 
-    gap: 18px;
+    gap: 14px;
   }
 
 
@@ -952,6 +998,7 @@ select {
 
   body::before {
     width: 750px;
+
     height: 300px;
 
     left: -300px;
@@ -960,6 +1007,7 @@ select {
 
   body::after {
     width: 750px;
+
     height: 300px;
 
     right: -300px;
@@ -979,10 +1027,20 @@ select {
 
 @media (max-width: 380px) {
 
+  .app {
+    width: calc(100% - 16px);
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
   .app-header h1 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
 
     gap: 5px;
+
+    letter-spacing: -0.5px;
   }
 
 

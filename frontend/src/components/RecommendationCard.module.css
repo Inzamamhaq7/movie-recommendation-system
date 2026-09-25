@@ -5,26 +5,27 @@
 .recommendationCard {
   position: relative;
 
+  box-sizing: border-box;
+
+  width: 100%;
+
+  min-width: 0;
+
   padding: 18px;
 
-  /* IMPORTANT:
-     Allows the score circle to extend
-     outside the top-right corner. */
   overflow: visible;
 
   border: 1px solid rgba(180, 83, 9, 0.4);
 
   border-radius: 18px;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(38, 24, 16, 0.97),
-      rgba(19, 13, 10, 0.99)
-    );
+  background: linear-gradient(
+    145deg,
+    rgba(38, 24, 16, 0.97),
+    rgba(19, 13, 10, 0.99)
+  );
 
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 
   transition:
     transform 0.25s ease,
@@ -90,16 +91,14 @@
 .recommendationCard:hover {
   transform: translateY(-4px);
 
-  border-color:
-    rgba(249, 115, 22, 0.65);
+  border-color: rgba(249, 115, 22, 0.65);
 
-  box-shadow:
-    0 22px 50px rgba(0, 0, 0, 0.42);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.42);
 }
 
 
 /* =========================================
-   MAIN MOVIE SECTION
+   MOVIE MAIN
    ========================================= */
 
 .movieMain {
@@ -109,12 +108,15 @@
 
   display: grid;
 
-  grid-template-columns:
-    150px minmax(0, 1fr);
+  grid-template-columns: 150px minmax(0, 1fr);
 
   column-gap: 20px;
 
   row-gap: 12px;
+
+  width: 100%;
+
+  min-width: 0;
 
   margin-bottom: 15px;
 }
@@ -133,25 +135,23 @@
 
   overflow: hidden;
 
+  grid-column: 1;
+
   grid-row: 1;
+
+  border: 1px solid rgba(249, 115, 22, 0.38);
 
   border-radius: 13px;
 
-  border:
-    1px solid
-    rgba(249, 115, 22, 0.38);
-
-  background:
-    linear-gradient(
-      145deg,
-      #2b180e,
-      #120b08
-    );
+  background: linear-gradient(
+    145deg,
+    #2b180e,
+    #120b08
+  );
 
   box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.35),
-    inset 0 0 30px
-    rgba(249, 115, 22, 0.08);
+    inset 0 0 30px rgba(249, 115, 22, 0.08);
 }
 
 
@@ -171,8 +171,7 @@
 }
 
 
-.recommendationCard:hover
-.moviePoster img {
+.recommendationCard:hover .moviePoster img {
   transform: scale(1.04);
 
   filter: brightness(1.05);
@@ -199,12 +198,6 @@
 
 .posterFallback span {
   font-size: 42px;
-
-  filter:
-    drop-shadow(
-      0 5px 15px
-      rgba(249, 115, 22, 0.3)
-    );
 }
 
 
@@ -226,18 +219,20 @@
    ========================================= */
 
 .movieInfo {
-  min-width: 0;
-
   grid-column: 2;
 
   grid-row: 1;
 
-  padding-top: 1px;
+  min-width: 0;
+
+  width: 100%;
+
+  padding-top: 0;
 }
 
 
 /* =========================================
-   MOVIE NUMBER
+   RANKING
    ========================================= */
 
 .movieNumber {
@@ -250,17 +245,19 @@
   font-size: 11px;
 
   font-weight: 700;
+
+  line-height: 1.2;
 }
 
 
 /* =========================================
-   MOVIE TITLE
+   TITLE
    ========================================= */
 
 .movieInfo h3 {
-  margin: 0 0 8px;
+  min-width: 0;
 
-  max-width: 100%;
+  margin: 0 0 8px;
 
   color: #ffffff;
 
@@ -272,7 +269,7 @@
 
   word-break: normal;
 
-  overflow-wrap: normal;
+  overflow-wrap: break-word;
 }
 
 
@@ -289,38 +286,33 @@
 
   width: fit-content;
 
+  max-width: 100%;
+
+  box-sizing: border-box;
+
   padding: 6px 12px;
+
+  border: 1px solid rgba(245, 158, 11, 0.22);
 
   border-radius: 999px;
 
   color: #fbbf24;
 
-  background:
-    rgba(180, 83, 9, 0.3);
-
-  border:
-    1px solid
-    rgba(245, 158, 11, 0.22);
+  background: rgba(180, 83, 9, 0.3);
 
   font-size: 11px;
 
   font-weight: 700;
+
+  line-height: 1.2;
 
   white-space: nowrap;
 }
 
 
 /* =========================================
-   FLOATING SCORE CIRCLE
+   SCORE CIRCLE
    ========================================= */
-
-/*
-   The circle is intentionally positioned
-   partly outside the card.
-
-   This means it does NOT take any space
-   away from the movie title.
-*/
 
 .scoreContainer {
   position: absolute;
@@ -340,25 +332,24 @@
   justify-content: center;
 
   width: 70px;
+
   height: 70px;
 
   border-radius: 50%;
 
-  background:
-    conic-gradient(
-      #f97316 0deg,
-      #f59e0b var(--score-angle),
-      #3f342d var(--score-angle),
-      #3f342d 360deg
-    );
+  background: conic-gradient(
+    #f97316 0deg,
+    #f59e0b var(--score-angle),
+    #3f342d var(--score-angle),
+    #3f342d 360deg
+  );
 
   box-shadow:
-    0 6px 18px
-    rgba(249, 115, 22, 0.18);
+    0 6px 18px rgba(249, 115, 22, 0.18);
+
+  pointer-events: none;
 }
 
-
-/* Inner circle */
 
 .scoreContainer::before {
   content: "";
@@ -366,6 +357,7 @@
   position: absolute;
 
   width: 56px;
+
   height: 56px;
 
   border-radius: 50%;
@@ -374,7 +366,7 @@
 }
 
 
-/* Percentage */
+/* Score number */
 
 .score {
   position: relative;
@@ -386,12 +378,10 @@
   font-size: 12px;
 
   font-weight: 800;
-
-  line-height: 1;
 }
 
 
-/* Match */
+/* Match label */
 
 .scoreLabel {
   position: relative;
@@ -408,55 +398,64 @@
 
   text-transform: uppercase;
 
-  letter-spacing: 0.5px;
+  letter-spacing: 0.7px;
 }
 
 
 /* =========================================
-   MOVIE META
+   MOVIE METADATA
    ========================================= */
 
 .movieMeta {
   display: grid;
 
   grid-template-columns:
-    max-content max-content;
+    repeat(2, minmax(0, 1fr));
 
   gap: 6px;
 
-  margin-top: 13px;
+  width: 100%;
 
-  max-width: 100%;
+  min-width: 0;
+
+  margin-top: 13px;
 }
 
 
 .movieMeta span {
-  display: inline-flex;
+  display: flex;
 
   align-items: center;
 
-  width: fit-content;
+  justify-content: center;
+
+  width: 100%;
+
+  min-width: 0;
+
+  box-sizing: border-box;
 
   padding: 5px 8px;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
 
   border-radius: 7px;
 
   color: #d6d3d1;
 
-  background:
-    rgba(255, 255, 255, 0.05);
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
 
   font-size: 10px;
 
+  line-height: 1.2;
+
   white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
-
-/* Last metadata item starts new row */
 
 .movieMeta span:last-child {
   grid-column: 1;
@@ -464,7 +463,7 @@
 
 
 /* =========================================
-   FULL WIDTH DESCRIPTION
+   DESCRIPTION
    ========================================= */
 
 .movieDescription {
@@ -473,6 +472,10 @@
   grid-row: 2;
 
   width: 100%;
+
+  min-width: 0;
+
+  box-sizing: border-box;
 
   margin: 0;
 
@@ -483,6 +486,8 @@
   font-size: 12px;
 
   line-height: 1.5;
+
+  overflow-wrap: break-word;
 }
 
 
@@ -495,16 +500,19 @@
 
   z-index: 1;
 
+  width: 100%;
+
+  min-width: 0;
+
+  box-sizing: border-box;
+
   padding: 13px 14px;
 
-  border:
-    1px solid
-    rgba(168, 85, 247, 0.18);
+  border: 1px solid rgba(168, 85, 247, 0.18);
 
   border-radius: 13px;
 
-  background:
-    rgba(35, 22, 30, 0.58);
+  background: rgba(35, 22, 30, 0.58);
 }
 
 
@@ -554,12 +562,10 @@
     repeat(5, minmax(0, 1fr));
 
   width: 100%;
+
+  min-width: 0;
 }
 
-
-/* =========================================
-   MATCH ITEM
-   ========================================= */
 
 .matchItem {
   display: flex;
@@ -575,8 +581,7 @@
   padding: 5px 4px;
 
   border-right:
-    1px solid
-    rgba(255, 255, 255, 0.08);
+    1px solid rgba(255, 255, 255, 0.08);
 
   text-align: center;
 }
@@ -610,21 +615,17 @@
   color: #f97316;
 }
 
-
 .moodIcon {
   color: #a855f7;
 }
-
 
 .languageIcon {
   color: #3b82f6;
 }
 
-
 .durationIcon {
   color: #4ade80;
 }
-
 
 .ratingIcon {
   color: #fbbf24;
@@ -657,6 +658,8 @@
 
   width: 100%;
 
+  min-width: 0;
+
   margin-top: 3px;
 
   overflow: hidden;
@@ -676,7 +679,7 @@
 
 
 /* =========================================
-   PREFERENCE MATCH / RULES
+   REASON ROW
    ========================================= */
 
 .compactReason {
@@ -686,19 +689,22 @@
 
   gap: 8px;
 
+  min-width: 0;
+
   margin-top: 9px;
 
   padding-top: 8px;
 
   border-top:
-    1px solid
-    rgba(255, 255, 255, 0.07);
+    1px solid rgba(255, 255, 255, 0.07);
 }
 
 
 .compactReason > div,
 .penalties > div {
   display: flex;
+
+  flex: 1 1 auto;
 
   flex-direction: column;
 
@@ -709,7 +715,7 @@
 
 
 .reasonIcon {
-  flex-shrink: 0;
+  flex: 0 0 22px;
 
   display: flex;
 
@@ -724,8 +730,7 @@
 
   color: #4ade80;
 
-  background:
-    rgba(74, 222, 128, 0.1);
+  background: rgba(74, 222, 128, 0.1);
 
   font-size: 12px;
 }
@@ -746,6 +751,8 @@
   font-size: 10px;
 
   line-height: 1.35;
+
+  overflow-wrap: anywhere;
 }
 
 
@@ -760,18 +767,19 @@
 
   gap: 8px;
 
+  min-width: 0;
+
   margin-top: 8px;
 
   padding-top: 8px;
 
   border-top:
-    1px solid
-    rgba(255, 255, 255, 0.06);
+    1px solid rgba(255, 255, 255, 0.06);
 }
 
 
 .penaltyIcon {
-  flex-shrink: 0;
+  flex: 0 0 22px;
 
   display: flex;
 
@@ -784,8 +792,7 @@
 
   border-radius: 6px;
 
-  background:
-    rgba(251, 146, 60, 0.1);
+  background: rgba(251, 146, 60, 0.1);
 
   font-size: 12px;
 }
@@ -810,20 +817,19 @@
 
   width: 100%;
 
+  box-sizing: border-box;
+
   margin-top: 10px;
 
   padding: 8px 14px;
 
-  border:
-    1px solid
-    rgba(249, 115, 22, 0.3);
+  border: 1px solid rgba(249, 115, 22, 0.3);
 
   border-radius: 9px;
 
   color: #fed7aa;
 
-  background:
-    rgba(249, 115, 22, 0.08);
+  background: rgba(249, 115, 22, 0.08);
 
   font-size: 11px;
 
@@ -841,110 +847,108 @@
 .movieDetailsButton:hover {
   transform: translateY(-1px);
 
-  border-color:
-    rgba(249, 115, 22, 0.6);
+  border-color: rgba(249, 115, 22, 0.6);
 
-  background:
-    rgba(249, 115, 22, 0.15);
+  background: rgba(249, 115, 22, 0.15);
 }
 
 
 .buttonArrow {
   font-size: 14px;
 
-  transition:
-    transform 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 
-.movieDetailsButton:hover
-.buttonArrow {
+.movieDetailsButton:hover .buttonArrow {
   transform: translateX(3px);
 }
 
 
 /* =========================================
    TABLET
+   651px - 950px
    ========================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 950px) and (min-width: 651px) {
 
   .movieMain {
     grid-template-columns:
-      135px minmax(0, 1fr);
+      125px minmax(0, 1fr);
+
+    column-gap: 16px;
   }
 
 
   .moviePoster {
-    width: 135px;
+    width: 125px;
+  }
+
+
+  .movieInfo h3 {
+    font-size: 22px;
   }
 
 
   .scoreContainer {
     width: 66px;
+
     height: 66px;
 
-    top: -17px;
-    right: -17px;
+    top: -16px;
+
+    right: -16px;
   }
 
 
   .scoreContainer::before {
     width: 53px;
+
     height: 53px;
   }
-
 }
 
 
 /* =========================================
    MOBILE
+   431px - 650px
    ========================================= */
 
 @media (max-width: 650px) {
 
   .recommendationCard {
-    padding: 15px;
+    padding: 16px;
+
+    overflow: hidden;
+
+    border-radius: 17px;
   }
 
 
-  .movieMain {
-    grid-template-columns:
-      105px minmax(0, 1fr);
-
-    column-gap: 14px;
-  }
-
-
-  .moviePoster {
-    width: 105px;
-  }
-
-
-  .movieInfo h3 {
-    font-size: 19px;
-
-    line-height: 1.15;
-  }
-
+  /* ---------------------------------------
+     SCORE
+     --------------------------------------- */
 
   .scoreContainer {
-    width: 60px;
-    height: 60px;
+    top: 10px;
 
-    top: -15px;
-    right: -15px;
+    right: 10px;
+
+    width: 60px;
+
+    height: 60px;
   }
 
 
   .scoreContainer::before {
     width: 48px;
+
     height: 48px;
   }
 
 
   .score {
-    font-size: 11px;
+    font-size: 10px;
   }
 
 
@@ -953,30 +957,184 @@
   }
 
 
-  .movieMeta {
+  /* ---------------------------------------
+     MOVIE MAIN
+     POSTER + INFORMATION SIDE BY SIDE
+     --------------------------------------- */
+
+  .movieMain {
     grid-template-columns:
-      max-content max-content;
+      minmax(105px, 42%)
+      minmax(0, 58%);
 
-    gap: 5px;
+    column-gap: 12px;
 
-    margin-top: 11px;
+    row-gap: 12px;
+
+    padding-top: 26px;
   }
 
 
-  .movieMeta span {
-    padding: 4px 6px;
+  /* ---------------------------------------
+     POSTER
+     IMPORTANT:
+     Poster stays in its original position.
+     --------------------------------------- */
 
-    font-size: 9px;
+  .moviePoster {
+    grid-column: 1;
+
+    grid-row: 1;
+
+    width: 100%;
+
+    max-width: none;
+
+    margin: 0;
+
+    aspect-ratio: 2 / 3;
   }
 
 
-  .movieDescription {
+  /* ---------------------------------------
+     MOVIE INFO
+     Only the right side moves down.
+     --------------------------------------- */
+
+  .movieInfo {
+    grid-column: 2;
+
+    grid-row: 1;
+
+    min-width: 0;
+
+    width: 100%;
+
+    padding-top: 10px;
+  }
+
+
+  /* ---------------------------------------
+     RANK
+     --------------------------------------- */
+
+  .movieNumber {
+    position: absolute;
+
+    top: 10px;
+
+    left: 0;
+
+    z-index: 5;
+
+    margin: 0;
+
     font-size: 11px;
   }
 
 
+  /* ---------------------------------------
+     TITLE
+     --------------------------------------- */
+
+  .movieInfo h3 {
+    min-width: 0;
+
+    margin: 0 0 8px;
+
+    padding-right: 2px;
+
+    font-size: 20px;
+
+    line-height: 1.15;
+
+    word-break: normal;
+
+    overflow-wrap: break-word;
+  }
+
+
+  /* ---------------------------------------
+     MATCH LEVEL
+     --------------------------------------- */
+
+  .matchLevel {
+    padding: 6px 10px;
+
+    font-size: 10px;
+  }
+
+
+  /* ---------------------------------------
+     METADATA
+     --------------------------------------- */
+
+  .movieMeta {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 5px;
+
+    width: 100%;
+
+    margin-top: 10px;
+  }
+
+
+  .movieMeta span {
+    justify-content: center;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 5px 4px;
+
+    font-size: 9px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+  }
+
+
+  .movieMeta span:last-child {
+    grid-column: 1;
+  }
+
+
+  /* ---------------------------------------
+     DESCRIPTION
+     --------------------------------------- */
+
+  .movieDescription {
+    grid-column: 1 / -1;
+
+    grid-row: 2;
+
+    width: 100%;
+
+    margin-top: 0;
+
+    padding-top: 0;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+  }
+
+
+  /* ---------------------------------------
+     WHY THIS MOVIE
+     --------------------------------------- */
+
   .reasonSection {
-    padding: 11px;
+    padding: 12px;
+  }
+
+
+  .reasonSection h4 {
+    font-size: 14px;
   }
 
 
@@ -1009,74 +1167,109 @@
   .reasonText {
     font-size: 9px;
   }
-
 }
 
 
 /* =========================================
-   VERY SMALL SCREENS
+   SMALL PHONES
+   <= 430px
    ========================================= */
 
 @media (max-width: 430px) {
 
-  .movieMain {
-    grid-template-columns:
-      1fr;
+  .recommendationCard {
+    padding: 14px;
   }
 
 
-  .moviePoster {
-    width: 145px;
-
-    max-width: 100%;
-
-    margin: 0 auto;
-  }
-
-
-  .movieInfo {
-    grid-column: 1;
-
-    grid-row: 2;
-  }
-
-
-  .movieDescription {
-    grid-column: 1;
-
-    grid-row: 3;
-  }
-
-
-  .movieMeta {
-    grid-template-columns:
-      max-content max-content;
-  }
-
-
-  .movieInfo h3 {
-    font-size: 20px;
-  }
-
+  /* Slightly smaller than 60px,
+     but still clearly visible. */
 
   .scoreContainer {
-    width: 58px;
-    height: 58px;
+    top: 8px;
 
-    top: -14px;
-    right: -14px;
+    right: 8px;
+
+    width: 47px;
+
+    height: 47px;
   }
 
 
   .scoreContainer::before {
-    width: 46px;
-    height: 46px;
+    width: 39px;
+
+    height: 39px;
   }
 
 
-  .matchGrid {
+  .score {
+    font-size: 9px;
+  }
+
+
+  .scoreLabel {
+    font-size: 5.5px;
+  }
+
+
+  .movieMain {
     grid-template-columns:
-      repeat(5, minmax(0, 1fr));
+      minmax(100px, 41%)
+      minmax(0, 59%);
+
+    column-gap: 10px;
+
+    padding-top: 25px;
+  }
+
+
+  .movieNumber {
+    top: 9px;
+
+    font-size: 10px;
+  }
+
+
+  .movieInfo h3 {
+    font-size: 18px;
+
+    line-height: 1.15;
+  }
+
+  .movieInfo {
+    margin-top: 5px;
+  }
+
+
+  .matchLevel {
+    padding: 5px 9px;
+
+    font-size: 9px;
+  }
+
+
+  .movieMeta {
+    gap: 4px;
+
+    margin-top: 8px;
+  }
+
+
+  .movieMeta span {
+    padding: 5px 3px;
+
+    font-size: 8px;
+  }
+
+
+  .movieDescription {
+    font-size: 10px;
+  }
+
+
+  .reasonSection {
+    padding: 10px;
   }
 
 
@@ -1093,28 +1286,106 @@
   .matchItem strong {
     font-size: 8px;
   }
-
 }
 
-@media (max-width: 430px) {
-  .scoreContainer {
-    width: 56px;
-    height: 56px;
 
-    top: -10px;
-    right: -10px;
+/* =========================================
+   VERY SMALL PHONES
+   <= 360px
+   ========================================= */
+
+@media (max-width: 360px) {
+
+  .recommendationCard {
+    padding: 12px;
   }
+
+
+  .scoreContainer {
+    width: 45px;
+
+    height: 45px;
+
+    top: 7px;
+
+    right: 7px;
+  }
+
 
   .scoreContainer::before {
-    width: 44px;
-    height: 44px;
+    width: 38px;
+
+    height: 38px;
   }
 
-  .score {
-    font-size: 10px;
+
+  .movieMain {
+    grid-template-columns:
+      minmax(92px, 40%)
+      minmax(0, 60%);
+
+    column-gap: 9px;
+
+    padding-top: 24px;
   }
 
-  .scoreLabel {
-    font-size: 6px;
+
+  .movieNumber {
+    top: 8px;
+
+    font-size: 9px;
+  }
+
+
+  .movieInfo h3 {
+    font-size: 17px;
+  }
+
+  .movieInfo {
+    margin-top: 5px;
+  }
+
+
+  .matchLevel {
+    padding: 5px 8px;
+
+    font-size: 8px;
+  }
+
+
+  .movieMeta span {
+    padding: 4px 2px;
+
+    font-size: 7.5px;
+  }
+
+
+  .movieDescription {
+    font-size: 9.5px;
+  }
+
+
+  .reasonSection {
+    padding: 9px;
+  }
+
+
+  .matchIcon {
+    font-size: 13px;
+  }
+
+
+  .matchName {
+    font-size: 6.5px;
+  }
+
+
+  .matchItem strong {
+    font-size: 7.5px;
+  }
+
+
+  .reasonText {
+    font-size: 8px;
   }
 }

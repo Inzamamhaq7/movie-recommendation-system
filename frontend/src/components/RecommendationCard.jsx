@@ -9,20 +9,25 @@ function RecommendationCard({ movie, index }) {
 
   const score = Number(movie?.score ?? 0);
 
-  const matchLevel = movie?.match_level || "Recommended";
+  const matchLevel =
+    movie?.match_level || "Recommended";
 
-  const genre = movie?.genre || "Genre not available";
+  const genre =
+    movie?.genre || "Genre not available";
 
-  const mood = movie?.mood || "Mood not available";
+  const mood =
+    movie?.mood || "Mood not available";
 
-  const language = movie?.language || "Language not available";
+  const language =
+    movie?.language || "Language not available";
 
   const duration =
     movie?.duration != null
       ? `${movie.duration} min`
       : "Duration unavailable";
 
-  const rating = movie?.rating || "Not Rated";
+  const rating =
+    movie?.rating || "Not Rated";
 
   const description =
     movie?.description ||
@@ -84,7 +89,7 @@ function RecommendationCard({ movie, index }) {
   ];
 
   // =========================================
-  // SCORE CIRCLE
+  // SCORE
   // =========================================
 
   const safeScore = Math.max(
@@ -92,17 +97,20 @@ function RecommendationCard({ movie, index }) {
     Math.min(score, 100)
   );
 
-  const scoreAngle = `${safeScore * 3.6}deg`;
+  const scoreAngle =
+    `${safeScore * 3.6}deg`;
 
   // =========================================
   // RENDER
   // =========================================
 
   return (
-    <article className={styles.recommendationCard}>
+    <article
+      className={styles.recommendationCard}
+    >
 
       {/* =====================================
-          FLOATING MATCH SCORE
+          MATCH SCORE
           ===================================== */}
 
       <div
@@ -128,7 +136,10 @@ function RecommendationCard({ movie, index }) {
 
       <div className={styles.movieMain}>
 
-        {/* Poster */}
+        {/* ===================================
+            POSTER
+            =================================== */}
+
         <div className={styles.moviePoster}>
 
           {movie?.poster_url ? (
@@ -138,23 +149,41 @@ function RecommendationCard({ movie, index }) {
               loading="lazy"
             />
           ) : (
-            <div className={styles.posterFallback}>
+            <div
+              className={styles.posterFallback}
+            >
               <span>🎬</span>
-              <small>Poster unavailable</small>
+
+              <small>
+                Poster unavailable
+              </small>
             </div>
           )}
 
         </div>
 
 
-        {/* Movie Information */}
+        {/* ===================================
+            MOVIE INFORMATION
+            =================================== */}
+
         <div className={styles.movieInfo}>
+
+          {/* Ranking */}
 
           <span className={styles.movieNumber}>
             #{index + 1}
           </span>
 
-          <h3>{title}</h3>
+
+          {/* Title */}
+
+          <h3>
+            {title}
+          </h3>
+
+
+          {/* Match level */}
 
           <span className={styles.matchLevel}>
             {matchLevel}
@@ -167,26 +196,38 @@ function RecommendationCard({ movie, index }) {
 
           <div className={styles.movieMeta}>
 
-            <span>🎭 {genre}</span>
+            <span>
+              🎭 {genre}
+            </span>
 
-            <span>😊 {mood}</span>
+            <span>
+              😊 {mood}
+            </span>
 
-            <span>🌐 {language}</span>
+            <span>
+              🌐 {language}
+            </span>
 
-            <span>⏱️ {duration}</span>
+            <span>
+              ⏱️ {duration}
+            </span>
 
-            <span>⭐ {rating}</span>
+            <span>
+              ⭐ {rating}
+            </span>
 
           </div>
 
         </div>
 
 
-        {/* =================================
+        {/* ===================================
             FULL WIDTH DESCRIPTION
-            ================================= */}
+            =================================== */}
 
-        <p className={styles.movieDescription}>
+        <p
+          className={styles.movieDescription}
+        >
           {description}
         </p>
 
@@ -198,6 +239,8 @@ function RecommendationCard({ movie, index }) {
           ===================================== */}
 
       <div className={styles.reasonSection}>
+
+        {/* Header */}
 
         <div className={styles.reasonHeader}>
 
@@ -234,11 +277,15 @@ function RecommendationCard({ movie, index }) {
                 {factor.icon}
               </span>
 
-              <span className={styles.matchName}>
+              <span
+                className={styles.matchName}
+              >
                 {factor.name}
               </span>
 
-              <strong title={factor.value}>
+              <strong
+                title={factor.value}
+              >
                 {factor.value}
               </strong>
 
@@ -253,21 +300,31 @@ function RecommendationCard({ movie, index }) {
             ================================= */}
 
         {matches.length > 0 && (
-          <div className={styles.compactReason}>
+          <div
+            className={styles.compactReason}
+          >
 
-            <span className={styles.reasonIcon}>
+            <span
+              className={styles.reasonIcon}
+            >
               ✓
             </span>
 
             <div>
 
-              <span className={styles.reasonLabel}>
+              <span
+                className={styles.reasonLabel}
+              >
                 Preference matches
               </span>
 
-              <span className={styles.reasonText}>
+              <span
+                className={styles.reasonText}
+              >
                 {matches
-                  .map((item) => item.reason)
+                  .map(
+                    (item) => item.reason
+                  )
                   .join(" • ")}
               </span>
 
@@ -282,21 +339,31 @@ function RecommendationCard({ movie, index }) {
             ================================= */}
 
         {rules.length > 0 && (
-          <div className={styles.compactReason}>
+          <div
+            className={styles.compactReason}
+          >
 
-            <span className={styles.reasonIcon}>
+            <span
+              className={styles.reasonIcon}
+            >
               💡
             </span>
 
             <div>
 
-              <span className={styles.reasonLabel}>
+              <span
+                className={styles.reasonLabel}
+              >
                 Recommendation insight
               </span>
 
-              <span className={styles.reasonText}>
+              <span
+                className={styles.reasonText}
+              >
                 {rules
-                  .map((item) => item.reason)
+                  .map(
+                    (item) => item.reason
+                  )
                   .join(" ")}
               </span>
 
@@ -311,21 +378,31 @@ function RecommendationCard({ movie, index }) {
             ================================= */}
 
         {penalties.length > 0 && (
-          <div className={styles.penalties}>
+          <div
+            className={styles.penalties}
+          >
 
-            <span className={styles.penaltyIcon}>
+            <span
+              className={styles.penaltyIcon}
+            >
               ⚠️
             </span>
 
             <div>
 
-              <span className={styles.reasonLabel}>
+              <span
+                className={styles.reasonLabel}
+              >
                 Factors affecting the score
               </span>
 
-              <span className={styles.reasonText}>
+              <span
+                className={styles.reasonText}
+              >
                 {penalties
-                  .map((item) => item.reason)
+                  .map(
+                    (item) => item.reason
+                  )
                   .join(" ")}
               </span>
 
@@ -350,7 +427,9 @@ function RecommendationCard({ movie, index }) {
           View Details
         </span>
 
-        <span className={styles.buttonArrow}>
+        <span
+          className={styles.buttonArrow}
+        >
           →
         </span>
 
