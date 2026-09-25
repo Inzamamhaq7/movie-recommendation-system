@@ -1,95 +1,361 @@
+import styles from "./RecommendationCard.module.css";
+
 function RecommendationCard({ movie, index }) {
-  const score = movie.score;
+  // =========================================
+  // BASIC MOVIE DATA
+  // =========================================
+
+  const title = movie?.title || "Untitled Movie";
+
+  const score = Number(movie?.score ?? 0);
+
+  const matchLevel = movie?.match_level || "Recommended";
+
+  const genre = movie?.genre || "Genre not available";
+
+  const mood = movie?.mood || "Mood not available";
+
+  const language = movie?.language || "Language not available";
+
+  const duration =
+    movie?.duration != null
+      ? `${movie.duration} min`
+      : "Duration unavailable";
+
+  const rating = movie?.rating || "Not Rated";
+
+  const description =
+    movie?.description ||
+    "Recommended based on your selected preferences.";
+
+  // =========================================
+  // SUMMARY DATA
+  // =========================================
+
+  const summary = movie?.summary || {};
+
+  const matches = Array.isArray(summary.matches)
+    ? summary.matches
+    : [];
+
+  const rules = Array.isArray(summary.rules)
+    ? summary.rules
+    : [];
+
+  const penalties = Array.isArray(summary.penalties)
+    ? summary.penalties
+    : [];
+
+  // =========================================
+  // MATCHING FACTORS
+  // =========================================
+
+  const matchFactors = [
+    {
+      name: "Genre",
+      value: genre,
+      icon: "🎭",
+      className: styles.genreIcon,
+    },
+    {
+      name: "Mood",
+      value: mood,
+      icon: "😊",
+      className: styles.moodIcon,
+    },
+    {
+      name: "Language",
+      value: language,
+      icon: "🌐",
+      className: styles.languageIcon,
+    },
+    {
+      name: "Duration",
+      value: duration,
+      icon: "⏱️",
+      className: styles.durationIcon,
+    },
+    {
+      name: "Rating",
+      value: rating,
+      icon: "⭐",
+      className: styles.ratingIcon,
+    },
+  ];
+
+  // =========================================
+  // SCORE CIRCLE
+  // =========================================
+
+  const safeScore = Math.max(
+    0,
+    Math.min(score, 100)
+  );
+
+  const scoreAngle = `${safeScore * 3.6}deg`;
+
+  // =========================================
+  // RENDER
+  // =========================================
 
   return (
-    <article className="recommendation-card">
-      {/* Movie Header */}
+    <article className={styles.recommendationCard}>
 
-      <div className="movie-header">
-        <div className="movie-title">
-          <h3>
-            {index + 1}. {movie.title}
-          </h3>
+      {/* =====================================
+          FLOATING MATCH SCORE
+          ===================================== */}
 
-          <span className="match-level">{movie.match_level}</span>
-        </div>
+      <div
+        className={styles.scoreContainer}
+        style={{
+          "--score-angle": scoreAngle,
+        }}
+        title={`${safeScore.toFixed(1)}% match`}
+      >
+        <span className={styles.score}>
+          {safeScore.toFixed(1)}%
+        </span>
 
-        <div
-          className="score-container"
-          style={{
-            "--score-angle": `${Math.min(score, 100) * 3.6}deg`,
-          }}
-        >
-          <span className="score">{score.toFixed(1)}%</span>
-
-          <span className="score-label">Match</span>
-        </div>
+        <span className={styles.scoreLabel}>
+          Match
+        </span>
       </div>
 
-      {/* Score Progress Bar */}
 
-      <div className="score-bar">
-        <div
-          className="score-fill"
-          style={{
-            width: `${Math.min(score, 100)}%`,
-          }}
-        />
+      {/* =====================================
+          MAIN MOVIE SECTION
+          ===================================== */}
+
+      <div className={styles.movieMain}>
+
+        {/* Poster */}
+        <div className={styles.moviePoster}>
+
+          {movie?.poster_url ? (
+            <img
+              src={movie.poster_url}
+              alt={`${title} poster`}
+              loading="lazy"
+            />
+          ) : (
+            <div className={styles.posterFallback}>
+              <span>🎬</span>
+              <small>Poster unavailable</small>
+            </div>
+          )}
+
+        </div>
+
+
+        {/* Movie Information */}
+        <div className={styles.movieInfo}>
+
+          <span className={styles.movieNumber}>
+            #{index + 1}
+          </span>
+
+          <h3>{title}</h3>
+
+          <span className={styles.matchLevel}>
+            {matchLevel}
+          </span>
+
+
+          {/* =================================
+              MOVIE METADATA
+              ================================= */}
+
+          <div className={styles.movieMeta}>
+
+            <span>🎭 {genre}</span>
+
+            <span>😊 {mood}</span>
+
+            <span>🌐 {language}</span>
+
+            <span>⏱️ {duration}</span>
+
+            <span>⭐ {rating}</span>
+
+          </div>
+
+        </div>
+
+
+        {/* =================================
+            FULL WIDTH DESCRIPTION
+            ================================= */}
+
+        <p className={styles.movieDescription}>
+          {description}
+        </p>
+
       </div>
 
-      {/* Matching Preferences */}
 
-      {movie.summary.matches.length > 0 && (
-        <div className="reason-section">
-          <h4>✓ Matching Preferences</h4>
+      {/* =====================================
+          WHY THIS MOVIE
+          ===================================== */}
 
-          <ul>
-            {movie.summary.matches.map((item, itemIndex) => (
-              <li key={itemIndex}>
-                <span>{item.reason}</span>
+      <div className={styles.reasonSection}>
 
-                <strong>+{item.score}</strong>
-              </li>
-            ))}
-          </ul>
+        <div className={styles.reasonHeader}>
+
+          <div>
+
+            <h4>
+              Why this movie?
+            </h4>
+
+            <p>
+              Based on your selected preferences
+            </p>
+
+          </div>
+
         </div>
-      )}
 
-      {/* AI Rules */}
 
-      {movie.summary.rules.length > 0 && (
-        <div className="reason-section rule-section">
-          <h4>🧠 Rules Fired</h4>
+        {/* =================================
+            MATCHING FACTORS
+            ================================= */}
 
-          <ul>
-            {movie.summary.rules.map((item, itemIndex) => (
-              <li key={itemIndex}>
-                <span>{item.reason}</span>
+        <div className={styles.matchGrid}>
 
-                <strong>+{item.score}</strong>
-              </li>
-            ))}
-          </ul>
+          {matchFactors.map((factor) => (
+            <div
+              className={styles.matchItem}
+              key={factor.name}
+            >
+
+              <span
+                className={`${styles.matchIcon} ${factor.className}`}
+              >
+                {factor.icon}
+              </span>
+
+              <span className={styles.matchName}>
+                {factor.name}
+              </span>
+
+              <strong title={factor.value}>
+                {factor.value}
+              </strong>
+
+            </div>
+          ))}
+
         </div>
-      )}
 
-      {/* Penalties */}
 
-      {movie.summary.penalties.length > 0 && (
-        <div className="reason-section penalty-section">
-          <h4>⚠ Penalties</h4>
+        {/* =================================
+            PREFERENCE MATCHES
+            ================================= */}
 
-          <ul>
-            {movie.summary.penalties.map((item, itemIndex) => (
-              <li key={itemIndex}>
-                <span>{item.reason}</span>
+        {matches.length > 0 && (
+          <div className={styles.compactReason}>
 
-                <strong>{item.score}</strong>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+            <span className={styles.reasonIcon}>
+              ✓
+            </span>
+
+            <div>
+
+              <span className={styles.reasonLabel}>
+                Preference matches
+              </span>
+
+              <span className={styles.reasonText}>
+                {matches
+                  .map((item) => item.reason)
+                  .join(" • ")}
+              </span>
+
+            </div>
+
+          </div>
+        )}
+
+
+        {/* =================================
+            RECOMMENDATION INSIGHT
+            ================================= */}
+
+        {rules.length > 0 && (
+          <div className={styles.compactReason}>
+
+            <span className={styles.reasonIcon}>
+              💡
+            </span>
+
+            <div>
+
+              <span className={styles.reasonLabel}>
+                Recommendation insight
+              </span>
+
+              <span className={styles.reasonText}>
+                {rules
+                  .map((item) => item.reason)
+                  .join(" ")}
+              </span>
+
+            </div>
+
+          </div>
+        )}
+
+
+        {/* =================================
+            PENALTIES
+            ================================= */}
+
+        {penalties.length > 0 && (
+          <div className={styles.penalties}>
+
+            <span className={styles.penaltyIcon}>
+              ⚠️
+            </span>
+
+            <div>
+
+              <span className={styles.reasonLabel}>
+                Factors affecting the score
+              </span>
+
+              <span className={styles.reasonText}>
+                {penalties
+                  .map((item) => item.reason)
+                  .join(" ")}
+              </span>
+
+            </div>
+
+          </div>
+        )}
+
+      </div>
+
+
+      {/* =====================================
+          VIEW DETAILS
+          ===================================== */}
+
+      <button
+        type="button"
+        className={styles.movieDetailsButton}
+      >
+
+        <span>
+          View Details
+        </span>
+
+        <span className={styles.buttonArrow}>
+          →
+        </span>
+
+      </button>
+
     </article>
   );
 }

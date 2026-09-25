@@ -1,4 +1,3 @@
-
 from config.weights import (
     WEIGHTS,
     MATCH_LEVELS
@@ -33,7 +32,7 @@ def calculate_score(movie, user):
     ]
 
     # -------------------------------------------------
-    # 2. Apply AI rules
+    # 2. Apply recommendation rules
     # -------------------------------------------------
 
     rule_results = apply_rules(
@@ -53,7 +52,7 @@ def calculate_score(movie, user):
     )
 
     # -------------------------------------------------
-    # 4. Calculate maximum possible score
+    # 4. Calculate theoretical maximum
     # -------------------------------------------------
 
     base_max_score = sum(
@@ -70,12 +69,18 @@ def calculate_score(movie, user):
     )
 
     # -------------------------------------------------
-    # 5. Convert score to percentage
+    # 5. Convert to percentage
     # -------------------------------------------------
 
     percentage = (
         raw_score / max_score
     ) * 100
+
+    # Keep the public score safely between 0 and 100.
+    percentage = max(
+        0,
+        min(percentage, 100)
+    )
 
     return percentage, results
 
@@ -103,34 +108,43 @@ def get_score_summary(results):
     penalties = []
     rules = []
 
-    normal_keywords = [
-        "Genre matched",
-        "Genre did not match",
-        "Mood matched",
-        "Mood did not match",
-        "Language matched",
-        "Language did not match",
-        "Duration matched",
-        "Duration slightly exceeds preference",
-        "Duration too long",
-        "Age rating matched",
-        "Age rating did not match"
-    ]
+    factor_prefixes = (
+        "Genre ",
+        "Mood ",
+        "Language ",
+        "Duration ",
+        "Rating "
+    )
 
     for result in results:
 
         score = result["score"]
         reason = result["reason"]
 
-        # Positive normal preference matches
-        if score > 0 and reason in normal_keywords:
+        # -------------------------------------------------
+        # Normal preference factors
+        # -------------------------------------------------
 
-            matches.append({
-                "reason": reason,
-                "score": score
-            })
+        if reason.startswith(factor_prefixes):
 
-        # Negative results / penalties
+            if score > 0:
+
+                matches.append({
+                    "reason": reason,
+                    "score": score
+                })
+
+            else:
+
+                penalties.append({
+                    "reason": reason,
+                    "score": score
+                })
+
+        # -------------------------------------------------
+        # Negative recommendation rules
+        # -------------------------------------------------
+
         elif score < 0:
 
             penalties.append({
@@ -138,7 +152,10 @@ def get_score_summary(results):
                 "score": score
             })
 
-        # Positive AI rules
+        # -------------------------------------------------
+        # Positive recommendation rules
+        # -------------------------------------------------
+
         elif score > 0:
 
             rules.append({
@@ -153,6 +170,44 @@ def get_score_summary(results):
     }
 
 
+def get_factor_scores(results):
+
+    factor_scores = {
+        "genre": 0,
+        "mood": 0,
+        "language": 0,
+        "duration": 0,
+        "rating": 0
+    }
+
+    for result in results:
+
+        reason = result["reason"]
+        score = result["score"]
+
+        if reason.startswith("Genre "):
+
+            factor_scores["genre"] = score
+
+        elif reason.startswith("Mood "):
+
+            factor_scores["mood"] = score
+
+        elif reason.startswith("Language "):
+
+            factor_scores["language"] = score
+
+        elif reason.startswith("Duration "):
+
+            factor_scores["duration"] = score
+
+        elif reason.startswith("Rating "):
+
+            factor_scores["rating"] = score
+
+    return factor_scores
+
+
 def get_recommendations(movies, user):
 
     recommendations = []
@@ -164,7 +219,11 @@ def get_recommendations(movies, user):
             user
         )
 
-        if score >= 40:
+        # -------------------------------------------------
+        # Minimum recommendation threshold
+        # -------------------------------------------------
+
+        if score >= MATCH_LEVELS["weak"]:
 
             match_level = get_match_level(
                 score
@@ -174,15 +233,79 @@ def get_recommendations(movies, user):
                 results
             )
 
+            factor_scores = get_factor_scores(
+                results
+            )
+
             recommendations.append({
-                "title": movie["title"],
-                "score": score,
+
+                # -----------------------------------------
+                # Movie information
+                # -----------------------------------------
+
+                "id": movie.get("id"),
+
+                "title": movie.get(
+                    "title",
+                    "Untitled Movie"
+                ),
+
+                "genre": movie.get(
+                    "genre",
+                    "Unknown"
+                ),
+
+                "mood": movie.get(
+                    "mood",
+                    "Unknown"
+                ),
+
+                "language": movie.get(
+                    "language",
+                    "Unknown"
+                ),
+
+                "duration": movie.get(
+                    "duration",
+                    0
+                ),
+
+                "rating": movie.get(
+                    "rating",
+                    "Not Rated"
+                ),
+
+                "description": movie.get(
+                    "description",
+                    "Recommended based on your preferences."
+                ),
+
+                "poster_url": movie.get(
+                    "poster_url"
+                ),
+
+                # -----------------------------------------
+                # Recommendation information
+                # -----------------------------------------
+
+                "score": round(
+                    score,
+                    2
+                ),
+
                 "match_level": match_level,
+
+                "factor_scores": factor_scores,
+
                 "results": results,
+
                 "summary": summary
             })
 
+    # -------------------------------------------------
     # Highest score first
+    # -------------------------------------------------
+
     recommendations.sort(
         key=lambda movie: movie["score"],
         reverse=True

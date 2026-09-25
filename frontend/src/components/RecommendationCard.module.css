@@ -1,0 +1,1120 @@
+/* =========================================
+   MOVIE CARD
+   ========================================= */
+
+.recommendationCard {
+  position: relative;
+
+  padding: 18px;
+
+  /* IMPORTANT:
+     Allows the score circle to extend
+     outside the top-right corner. */
+  overflow: visible;
+
+  border: 1px solid rgba(180, 83, 9, 0.4);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(38, 24, 16, 0.97),
+      rgba(19, 13, 10, 0.99)
+    );
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.3);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* =========================================
+   CARD GLOW
+   ========================================= */
+
+.recommendationCard::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -100px;
+  right: -80px;
+
+  border-radius: 50%;
+
+  background: #f97316;
+
+  opacity: 0.06;
+
+  filter: blur(30px);
+
+  pointer-events: none;
+}
+
+
+.recommendationCard::after {
+  content: "";
+
+  position: absolute;
+
+  width: 140px;
+  height: 140px;
+
+  bottom: -100px;
+  left: -70px;
+
+  border-radius: 50%;
+
+  background: #c2410c;
+
+  opacity: 0.04;
+
+  filter: blur(30px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   HOVER
+   ========================================= */
+
+.recommendationCard:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(249, 115, 22, 0.65);
+
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.42);
+}
+
+
+/* =========================================
+   MAIN MOVIE SECTION
+   ========================================= */
+
+.movieMain {
+  position: relative;
+
+  z-index: 1;
+
+  display: grid;
+
+  grid-template-columns:
+    150px minmax(0, 1fr);
+
+  column-gap: 20px;
+
+  row-gap: 12px;
+
+  margin-bottom: 15px;
+}
+
+
+/* =========================================
+   POSTER
+   ========================================= */
+
+.moviePoster {
+  position: relative;
+
+  width: 150px;
+
+  aspect-ratio: 2 / 3;
+
+  overflow: hidden;
+
+  grid-row: 1;
+
+  border-radius: 13px;
+
+  border:
+    1px solid
+    rgba(249, 115, 22, 0.38);
+
+  background:
+    linear-gradient(
+      145deg,
+      #2b180e,
+      #120b08
+    );
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.35),
+    inset 0 0 30px
+    rgba(249, 115, 22, 0.08);
+}
+
+
+.moviePoster img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+}
+
+
+.recommendationCard:hover
+.moviePoster img {
+  transform: scale(1.04);
+
+  filter: brightness(1.05);
+}
+
+
+/* =========================================
+   POSTER FALLBACK
+   ========================================= */
+
+.posterFallback {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+.posterFallback span {
+  font-size: 42px;
+
+  filter:
+    drop-shadow(
+      0 5px 15px
+      rgba(249, 115, 22, 0.3)
+    );
+}
+
+
+.posterFallback small {
+  margin-top: 8px;
+
+  color: #78716c;
+
+  font-size: 9px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   MOVIE INFORMATION
+   ========================================= */
+
+.movieInfo {
+  min-width: 0;
+
+  grid-column: 2;
+
+  grid-row: 1;
+
+  padding-top: 1px;
+}
+
+
+/* =========================================
+   MOVIE NUMBER
+   ========================================= */
+
+.movieNumber {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #a8a29e;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   MOVIE TITLE
+   ========================================= */
+
+.movieInfo h3 {
+  margin: 0 0 8px;
+
+  max-width: 100%;
+
+  color: #ffffff;
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+  line-height: 1.15;
+
+  word-break: normal;
+
+  overflow-wrap: normal;
+}
+
+
+/* =========================================
+   MATCH LEVEL
+   ========================================= */
+
+.matchLevel {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: fit-content;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  color: #fbbf24;
+
+  background:
+    rgba(180, 83, 9, 0.3);
+
+  border:
+    1px solid
+    rgba(245, 158, 11, 0.22);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   FLOATING SCORE CIRCLE
+   ========================================= */
+
+/*
+   The circle is intentionally positioned
+   partly outside the card.
+
+   This means it does NOT take any space
+   away from the movie title.
+*/
+
+.scoreContainer {
+  position: absolute;
+
+  top: -18px;
+
+  right: -18px;
+
+  z-index: 20;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 70px;
+  height: 70px;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #f97316 0deg,
+      #f59e0b var(--score-angle),
+      #3f342d var(--score-angle),
+      #3f342d 360deg
+    );
+
+  box-shadow:
+    0 6px 18px
+    rgba(249, 115, 22, 0.18);
+}
+
+
+/* Inner circle */
+
+.scoreContainer::before {
+  content: "";
+
+  position: absolute;
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 50%;
+
+  background: #17100d;
+}
+
+
+/* Percentage */
+
+.score {
+  position: relative;
+
+  z-index: 1;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+/* Match */
+
+.scoreLabel {
+  position: relative;
+
+  z-index: 1;
+
+  margin-top: 2px;
+
+  color: #a8a29e;
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================
+   MOVIE META
+   ========================================= */
+
+.movieMeta {
+  display: grid;
+
+  grid-template-columns:
+    max-content max-content;
+
+  gap: 6px;
+
+  margin-top: 13px;
+
+  max-width: 100%;
+}
+
+
+.movieMeta span {
+  display: inline-flex;
+
+  align-items: center;
+
+  width: fit-content;
+
+  padding: 5px 8px;
+
+  border-radius: 7px;
+
+  color: #d6d3d1;
+
+  background:
+    rgba(255, 255, 255, 0.05);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+
+  font-size: 10px;
+
+  white-space: nowrap;
+}
+
+
+/* Last metadata item starts new row */
+
+.movieMeta span:last-child {
+  grid-column: 1;
+}
+
+
+/* =========================================
+   FULL WIDTH DESCRIPTION
+   ========================================= */
+
+.movieDescription {
+  grid-column: 1 / -1;
+
+  grid-row: 2;
+
+  width: 100%;
+
+  margin: 0;
+
+  padding-top: 2px;
+
+  color: #b5a39b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   WHY THIS MOVIE
+   ========================================= */
+
+.reasonSection {
+  position: relative;
+
+  z-index: 1;
+
+  padding: 13px 14px;
+
+  border:
+    1px solid
+    rgba(168, 85, 247, 0.18);
+
+  border-radius: 13px;
+
+  background:
+    rgba(35, 22, 30, 0.58);
+}
+
+
+/* =========================================
+   REASON HEADER
+   ========================================= */
+
+.reasonHeader {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+}
+
+
+.reasonSection h4 {
+  margin: 0;
+
+  color: #f5f5f4;
+
+  font-size: 15px;
+
+  font-weight: 750;
+}
+
+
+.reasonHeader p {
+  margin: 2px 0 0;
+
+  color: #78716c;
+
+  font-size: 9px;
+}
+
+
+/* =========================================
+   MATCH GRID
+   ========================================= */
+
+.matchGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  width: 100%;
+}
+
+
+/* =========================================
+   MATCH ITEM
+   ========================================= */
+
+.matchItem {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 0;
+
+  padding: 5px 4px;
+
+  border-right:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  text-align: center;
+}
+
+
+.matchItem:last-child {
+  border-right: none;
+}
+
+
+/* =========================================
+   MATCH ICON
+   ========================================= */
+
+.matchIcon {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  height: 23px;
+
+  margin-bottom: 2px;
+
+  font-size: 17px;
+}
+
+
+.genreIcon {
+  color: #f97316;
+}
+
+
+.moodIcon {
+  color: #a855f7;
+}
+
+
+.languageIcon {
+  color: #3b82f6;
+}
+
+
+.durationIcon {
+  color: #4ade80;
+}
+
+
+.ratingIcon {
+  color: #fbbf24;
+}
+
+
+/* =========================================
+   MATCH NAME
+   ========================================= */
+
+.matchName {
+  display: block;
+
+  color: #a8a29e;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================
+   MATCH VALUE
+   ========================================= */
+
+.matchItem strong {
+  display: block;
+
+  width: 100%;
+
+  margin-top: 3px;
+
+  overflow: hidden;
+
+  color: #f59e0b;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   PREFERENCE MATCH / RULES
+   ========================================= */
+
+.compactReason {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  margin-top: 9px;
+
+  padding-top: 8px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+}
+
+
+.compactReason > div,
+.penalties > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+  min-width: 0;
+}
+
+
+.reasonIcon {
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+
+  border-radius: 6px;
+
+  color: #4ade80;
+
+  background:
+    rgba(74, 222, 128, 0.1);
+
+  font-size: 12px;
+}
+
+
+.reasonLabel {
+  color: #d6d3d1;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+.reasonText {
+  color: #a8a29e;
+
+  font-size: 10px;
+
+  line-height: 1.35;
+}
+
+
+/* =========================================
+   PENALTIES
+   ========================================= */
+
+.penalties {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  margin-top: 8px;
+
+  padding-top: 8px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+}
+
+
+.penaltyIcon {
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+
+  border-radius: 6px;
+
+  background:
+    rgba(251, 146, 60, 0.1);
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   VIEW DETAILS
+   ========================================= */
+
+.movieDetailsButton {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 8px 14px;
+
+  border:
+    1px solid
+    rgba(249, 115, 22, 0.3);
+
+  border-radius: 9px;
+
+  color: #fed7aa;
+
+  background:
+    rgba(249, 115, 22, 0.08);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.movieDetailsButton:hover {
+  transform: translateY(-1px);
+
+  border-color:
+    rgba(249, 115, 22, 0.6);
+
+  background:
+    rgba(249, 115, 22, 0.15);
+}
+
+
+.buttonArrow {
+  font-size: 14px;
+
+  transition:
+    transform 0.2s ease;
+}
+
+
+.movieDetailsButton:hover
+.buttonArrow {
+  transform: translateX(3px);
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  .movieMain {
+    grid-template-columns:
+      135px minmax(0, 1fr);
+  }
+
+
+  .moviePoster {
+    width: 135px;
+  }
+
+
+  .scoreContainer {
+    width: 66px;
+    height: 66px;
+
+    top: -17px;
+    right: -17px;
+  }
+
+
+  .scoreContainer::before {
+    width: 53px;
+    height: 53px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 650px) {
+
+  .recommendationCard {
+    padding: 15px;
+  }
+
+
+  .movieMain {
+    grid-template-columns:
+      105px minmax(0, 1fr);
+
+    column-gap: 14px;
+  }
+
+
+  .moviePoster {
+    width: 105px;
+  }
+
+
+  .movieInfo h3 {
+    font-size: 19px;
+
+    line-height: 1.15;
+  }
+
+
+  .scoreContainer {
+    width: 60px;
+    height: 60px;
+
+    top: -15px;
+    right: -15px;
+  }
+
+
+  .scoreContainer::before {
+    width: 48px;
+    height: 48px;
+  }
+
+
+  .score {
+    font-size: 11px;
+  }
+
+
+  .scoreLabel {
+    font-size: 6px;
+  }
+
+
+  .movieMeta {
+    grid-template-columns:
+      max-content max-content;
+
+    gap: 5px;
+
+    margin-top: 11px;
+  }
+
+
+  .movieMeta span {
+    padding: 4px 6px;
+
+    font-size: 9px;
+  }
+
+
+  .movieDescription {
+    font-size: 11px;
+  }
+
+
+  .reasonSection {
+    padding: 11px;
+  }
+
+
+  .matchGrid {
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+  }
+
+
+  .matchItem {
+    padding: 5px 2px;
+  }
+
+
+  .matchIcon {
+    font-size: 15px;
+  }
+
+
+  .matchName {
+    font-size: 8px;
+  }
+
+
+  .matchItem strong {
+    font-size: 9px;
+  }
+
+
+  .reasonText {
+    font-size: 9px;
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL SCREENS
+   ========================================= */
+
+@media (max-width: 430px) {
+
+  .movieMain {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .moviePoster {
+    width: 145px;
+
+    max-width: 100%;
+
+    margin: 0 auto;
+  }
+
+
+  .movieInfo {
+    grid-column: 1;
+
+    grid-row: 2;
+  }
+
+
+  .movieDescription {
+    grid-column: 1;
+
+    grid-row: 3;
+  }
+
+
+  .movieMeta {
+    grid-template-columns:
+      max-content max-content;
+  }
+
+
+  .movieInfo h3 {
+    font-size: 20px;
+  }
+
+
+  .scoreContainer {
+    width: 58px;
+    height: 58px;
+
+    top: -14px;
+    right: -14px;
+  }
+
+
+  .scoreContainer::before {
+    width: 46px;
+    height: 46px;
+  }
+
+
+  .matchGrid {
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+  }
+
+
+  .matchIcon {
+    font-size: 14px;
+  }
+
+
+  .matchName {
+    font-size: 7px;
+  }
+
+
+  .matchItem strong {
+    font-size: 8px;
+  }
+
+}
+
+@media (max-width: 430px) {
+  .scoreContainer {
+    width: 56px;
+    height: 56px;
+
+    top: -10px;
+    right: -10px;
+  }
+
+  .scoreContainer::before {
+    width: 44px;
+    height: 44px;
+  }
+
+  .score {
+    font-size: 10px;
+  }
+
+  .scoreLabel {
+    font-size: 6px;
+  }
+}
