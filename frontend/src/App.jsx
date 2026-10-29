@@ -88,11 +88,6 @@ function App() {
   return (
     <>
       <header className="site-nav">
-        <Link
-          to="/"
-          className="site-brand"
-          aria-label="Movie Recommendation System home"
-        >
           <img
             src="/images/movie-recommendation-logo.svg"
             alt=""
@@ -102,7 +97,6 @@ function App() {
           <span className="site-brand-text">
             Movie <span>Recommendation</span> System
           </span>
-        </Link>
 
         <nav
           className="site-nav-links"
